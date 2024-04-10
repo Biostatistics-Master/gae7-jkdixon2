@@ -1,6 +1,6 @@
 ---
 title: "GAE7"
-author: "Your Name Here"
+author: "Jill Dixon"
 format: 
   html:
     theme: custom.scss
@@ -80,6 +80,115 @@ df1$Block <- factor(df1$Block)
 
 ### Statistical Methods
 
+```{r}
+#| label: tbl-Culex
+#| tbl-cap: "Effects of predation and nutrients on Culex"
+
+CulexFactorial <- lmer(Culex_Egg_Rafts ~ Fish*Nutrient + (1|Block), df1)
+
+CulexAnova <- tidy(anova(CulexFactorial))
+
+
+```
+
+
+```{r}
+
+#| label: tbl-Hydro
+#| tbl-cap: "Effects of predation and nutrients on Hydrophilidae beetles"
+
+HydroFactorial <- lmer(Hydrophilidae ~ Fish*Nutrient + (1|Block), df1)
+
+HydroAnova <- tidy(anova(HydroFactorial))
+
+```
+
+
+```{r}
+
+#| label: tbl-Dytis
+#| #| tbl-cap: "Effects of predation and nutrients on Dytiscidae"
+
+DytisFactorial <- lmer(Dytiscidae ~ Fish*Nutrient + (1|Block), df1)
+
+DytisAnova <- tidy(anova(DytisFactorial))
+
+```
+
+
+```{r}
+
+#| label: fig-Culex
+#| fig-cap: "Plot showing the effects of presence of fish predators and nutrients on Culex egg rafts."
+
+ggplot(df1) +
+  stat_summary(
+    aes(x = Nutrient,
+        y = Culex_Egg_Rafts,
+        group = Fish,
+        shape = Fish,
+        color = Fish,
+    ),
+        position = position_dodge(
+          width = 0.2)
+      
+    ) +
+        scale_color_manual(values = c("red4", "orange", "blue3")) +
+  
+  theme_classic()
+
+```
+
+
+```{r}
+
+#| label: fig-Hydro
+#| fig-cap: "Plot showing the effects of presence of fish predators and nutrients on Hydrophilidae."
+
+ggplot(df1) +
+  stat_summary(
+    aes(x = Nutrient,
+        y = Hydrophilidae,
+        group = Fish,
+        shape = Fish,
+        color = Fish,
+    ),
+        position = position_dodge(
+          width = 0.2)
+      
+    ) +
+        scale_color_manual(values = c("red4", "orange", "blue3")) +
+  
+  theme_classic() 
+
+```
+
+
+```{r}
+
+#| label: fig-Dytis
+#| fig-cap: "Plot showing the effects of presence of fish predators and nutrients on Dytiscidae."
+
+ggplot(df1) +
+  stat_summary(
+    aes(x = Nutrient,
+        y = Dytiscidae,
+        group = Fish,
+        shape = Fish,
+        color = Fish,
+    ),
+        position = position_dodge(
+          width = 0.2)
+      
+    ) +
+        scale_color_manual(values = c("red4", "orange", "blue3")) +
+  
+  theme_classic()  
+
+```
+
 ## Results
+
+There was no significant relationship between predator presence and nutrient amount for Culex and Hydrophilidae (p > 0.05), but for Dytiscidae, there was a significant relationship (p < 0.01) @tbl-Culex @tbl-Hydro @tbl-Dytis.The presence of fish predators and nutrients had varying effects on the studied species. There was a significant increase in Culex egg rafts when there were no fish (p = 0.00161), as well as when nutrients increased, (p = 0.04256) @fig-Culex. Increased nutrient availability did not result in a significant increase in Hydrophilidae (p = 0.1088), and neither did the absence of predators (p = 0.0606) @fig-Hydro. Lastly, decreasing the number of fish predators and increasing nutrients both resulted in a significant increase in Dytiscidae ( p < 0.001), (p < 0.001) @fig-Dytis.
 
 ## References
